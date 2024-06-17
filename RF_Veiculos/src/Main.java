@@ -8,11 +8,12 @@ public class Main {
         Concessionaria rfVeiculos = new Concessionaria("RF_Veiculos", 0);
         Cliente raphael = new Cliente("Raphael", 3000);
         Cliente elcio = new Cliente("Elcio", 6000);
-        Veiculo Fiat_UNO = new Carro("Fiat Uno", 2000, "Fiat","Azul", 2000);
-        rfVeiculos.adicionarNovosVeiculos(Fiat_UNO);
-        rfVeiculos.venderVeiculo(raphael, "Fiat Uno");
-        System.out.println(raphael.getSaldo());
-        raphael.venderVeiculo(elcio, "Fiat Uno");
-
+        Veiculo fiat_uno = new Carro("Fiat Uno", 1000, "Fiat","Azul", 2000);
+        Veiculo fiat_mobi = new Carro("Fiat Mobi", 3000, "Fiat","Amarelo", 2000);
+        Veiculo volkswagen_gol = new Carro("Volkswagen Gol", 2000, "Volkswagen","Preto", 2000);
+        rfVeiculos.adicionarNovosVeiculos(fiat_uno);
+        rfVeiculos.adicionarNovosVeiculos(fiat_mobi);
+        rfVeiculos.adicionarNovosVeiculos(volkswagen_gol);
+        System.out.println(rfVeiculos.filtrarCarrosValor(1000,2000));
     }
 }
