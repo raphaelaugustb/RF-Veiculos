@@ -14,7 +14,11 @@ public class Veiculo {
         this.marca = marca;
         this.cor = cor;
         this.anoDeLancamento = anoDeLancamento;
-         this.tipoVeiculo = null;
+         this.tipoVeiculo = "Veiculo";
+    }
+
+    public String getTipoVeiculo() {
+        return tipoVeiculo;
     }
 
     public void setTipoVeiculo(String tipoVeiculo) {
@@ -50,6 +54,6 @@ public class Veiculo {
                 ", cor='" + cor + '\'' +
                 ", anoDeLancamento=" + anoDeLancamento +
                 ", tipoVeiculo='" + tipoVeiculo + '\'' +
-                '}';
+                '}' + "\n";
     }
 }

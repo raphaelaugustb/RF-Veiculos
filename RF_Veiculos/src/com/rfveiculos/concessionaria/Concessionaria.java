@@ -70,11 +70,16 @@ public class Concessionaria {
                 ", veiculosComprados=" + veiculosComprados +
                 '}';
     }
-    public List<Veiculo> filtrarCarrosValor(int valorInicial , int valorFinal){
+    public List<Veiculo> filtrarCarrosValor(int valorInicial , int valorFinal , String tipoVeiculo){
         List<Veiculo> veiculoFaixaPreco = new ArrayList<>();
         veiculosCadastrados.forEach(v -> {
             double precoVeiculo= v.getPreco();
-            if (precoVeiculo >= valorInicial && precoVeiculo  <= valorFinal){
+            if (tipoVeiculo == "Todos"){
+                if (precoVeiculo >= valorInicial && precoVeiculo  <= valorFinal){
+                    veiculoFaixaPreco.add(v);
+                }
+            }
+            if (precoVeiculo >= valorInicial && precoVeiculo  <= valorFinal && Objects.equals(v.getTipoVeiculo(), tipoVeiculo)){
                 veiculoFaixaPreco.add(v);
             }
         });
