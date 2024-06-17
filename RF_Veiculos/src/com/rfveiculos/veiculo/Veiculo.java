@@ -8,13 +8,17 @@ public class Veiculo {
     private int anoDeLancamento;
     private String tipoVeiculo;
 
-    public Veiculo(String modelo, double preco, String marca, String cor, int anoDeLancamento, String tipoVeiculo) {
+    public Veiculo(String modelo, double preco, String marca, String cor, int anoDeLancamento) {
         this.modelo = modelo;
         this.preco = preco;
         this.marca = marca;
         this.cor = cor;
         this.anoDeLancamento = anoDeLancamento;
-    this.tipoVeiculo = tipoVeiculo;
+         this.tipoVeiculo = null;
+    }
+
+    public void setTipoVeiculo(String tipoVeiculo) {
+        this.tipoVeiculo = tipoVeiculo;
     }
 
     public String getModelo() {
@@ -35,5 +39,17 @@ public class Veiculo {
 
     public String getMarca() {
         return marca;
+    }
+
+    @Override
+    public String toString() {
+        return "Veiculo{" +
+                "modelo='" + modelo + '\'' +
+                ", preco=" + preco +
+                ", marca='" + marca + '\'' +
+                ", cor='" + cor + '\'' +
+                ", anoDeLancamento=" + anoDeLancamento +
+                ", tipoVeiculo='" + tipoVeiculo + '\'' +
+                '}';
     }
 }
