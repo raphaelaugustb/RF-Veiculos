@@ -11,12 +11,14 @@ public class OperacaoComercial {
     Veiculo veiculo;
     LocalDate dataOperacao;
     String tipoOperacao;
-    public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao){
+    String cpfCliente;
+    public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao, String cpfCliente){
             this.comprador = comprador;
             this.vendedor = vendedor;
             this.veiculo = veiculo;
             dataOperacao = LocalDate.now();
             this.tipoOperacao = tipoOperacao;
+           this.cpfCliente = cpfCliente;
     }
 
     public String getVendedor() {
@@ -30,9 +32,20 @@ public class OperacaoComercial {
     public String getComprador() {
         return comprador;
     }
+
+    public String getCpfCliente() {
+        return cpfCliente;
+    }
+
+    public LocalDate getDataOperacao() {
+        return dataOperacao;
+    }
+
     public String getTipoOperacao(){
         return tipoOperacao;
     }
+
+
 
     @Override
     public String toString() {
@@ -42,6 +55,7 @@ public class OperacaoComercial {
                 ", veiculo=" + veiculo +
                 ", dataOperacao=" + dataOperacao +
                 ", tipoOperacao='" + tipoOperacao + '\'' +
-                '}' + "\n";
+                ", cpfCliente='" + cpfCliente + '\'' +
+                '}';
     }
 }

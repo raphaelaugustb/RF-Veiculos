@@ -1,20 +1,25 @@
 package com.rfveiculos.models;
 
+import com.rfveiculos.Cliente.Cliente;
 import com.rfveiculos.OperacaoComercial.OperacaoComercial;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Comercial {
     private String nome;
     private List<Veiculo> veiculosCadastrados;
     private List<OperacaoComercial> operacoesComercias;
-
-    public Comercial(String nome) {
+    private String cpf;
+    public Comercial(String nome, String cpf) {
         this.veiculosCadastrados = new ArrayList<>();
         this.operacoesComercias = new ArrayList<>();
         this.nome = nome;
+        this.cpf = cpf;
     }
 
     public void adicionarNovosVeiculos(Veiculo veiculo) {
@@ -32,32 +37,59 @@ public class Comercial {
       return veiculoComprado;
     }
 
-    public void comprarVeiculo(Comercial cliente, String consultorVendas, String nomeVeiculo) {
-        Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, cliente.veiculosCadastrados);
+    public void comprarVeiculo(Comercial clienteComercial, String consultorVendas, String nomeVeiculo) {
+        Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, clienteComercial.veiculosCadastrados);
         String comprador = this.nome+": " + consultorVendas;
         OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
                 comprador ,
-                cliente.getNome(),
+                clienteComercial.getNome(),
                 veiculoComprado,
-                "Compra");
+                "Compra", clienteComercial.getCpf());
         veiculosCadastrados.add(veiculoComprado);
-        cliente.veiculosCadastrados.remove(veiculoComprado);
+        clienteComercial.veiculosCadastrados.remove(veiculoComprado);
         todaOperacoesComercias().add(operacaoComercialCompra);
-        cliente.todaOperacoesComercias().add(operacaoComercialCompra);
+        clienteComercial.todaOperacoesComercias().add(operacaoComercialCompra);
     }
+    public String imprimirNotaFiscal(Cliente cliente, String nomeVeiculo){
+        OperacaoComercial operacaoNotaFiscal = null;
+        for(OperacaoComercial o : operacoesComercias){
+            if (o.getVeiculo().getModelo() == nomeVeiculo && cliente.getCpf() == o.getCpfCliente()){
+                operacaoNotaFiscal = o;
+            }
+        };
+        String notaFiscal =
+                "  -----------------------------------------------------------------------------------------------" + "\n"
+                        + "                                       NOTA FISCAL" + "\n"+
+                "                      Nome: " + cliente.getNome()+ "               Cpf: " + cliente.getCpf() +"\n"+
+                "                      Tipo de veiculo: " + operacaoNotaFiscal.getVeiculo().getTipoVeiculo() + "    Tipo de operação: " +
+                          operacaoNotaFiscal.getTipoOperacao() + "\n"
+                +"                      Data: " + operacaoNotaFiscal.getDataOperacao() + "          Vendedor: " + operacaoNotaFiscal.getVendedor() +"\n"
+                +"                      Marca: "+ operacaoNotaFiscal.getVeiculo().getMarca()+ "               Modelo: " + operacaoNotaFiscal.getVeiculo().getModelo() +
+                          "\n"
+                +"                      Ano: "+  operacaoNotaFiscal.getVeiculo().getAnoDeLancamento() +"                 Cor: " + operacaoNotaFiscal.getVeiculo().getCor() +
+                          "\n" + "\n"
+                          + "         Empresa: " + nome + " "+this.cpf + "  Data de impressão: " + LocalDate.now()+"\n"+ "\n"+
+                "  -----------------------------------------------------------------------------------------------";
+        if (operacaoNotaFiscal == null){
+            System.out.println("Venda ou Compra nao encontrada");
+            return null;
+        } else {
+            return notaFiscal;
+        }
 
-    public void venderVeiculo(Comercial cliente, String consultorVendas, String nomeVeiculo) {
+    }
+    public void venderVeiculo(Comercial clienteComercial, String consultorVendas, String nomeVeiculo) {
         Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, veiculosCadastrados);
         String vendedor = this.nome+": " + consultorVendas;
             OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
-                    cliente.getNome(),
+                    clienteComercial.getNome(),
                     vendedor,
                     veiculoComprado,
-                    "Venda");
+                    "Venda", clienteComercial.getCpf());
             veiculosCadastrados.remove(veiculoComprado);
-            cliente.veiculosCadastrados.add(veiculoComprado);
+            clienteComercial.veiculosCadastrados.add(veiculoComprado);
            todaOperacoesComercias().add(operacaoComercialCompra);
-           cliente.todaOperacoesComercias().add(operacaoComercialCompra);
+           clienteComercial.todaOperacoesComercias().add(operacaoComercialCompra);
 
     }
 
@@ -156,6 +188,7 @@ public class Comercial {
         return  this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Compra").toList();
     }
 
-
-
+    public String getCpf() {
+        return cpf;
+    }
 }
