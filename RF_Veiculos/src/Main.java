@@ -4,8 +4,11 @@ import com.rfveiculos.Veiculo.Carro;
 import com.rfveiculos.Veiculo.Moto;
 import com.rfveiculos.models.Veiculo;
 
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
+
         Concessionaria rfVeiculos = new Concessionaria("RF_Veiculos","14.929.978/0001-47");
         Cliente raphael = new Cliente("Raphael", "299.567.293-34");
         Cliente elcio = new Cliente("Elcio", "938-000-287-203");
@@ -25,7 +28,11 @@ public class Main {
         System.out.println(rfVeiculos.filtrarVeiculosComprados());
         // Funcao de filtrar por valor, Parametros: Valor inicial, Valor final/ TipoVeiculo:Todos,Moto,Carro
         rfVeiculos.filtrarCarrosValor(1000, 2000, "Todos");
-        System.out.println(rfVeiculos.imprimirNotaFiscal(elcio, "Fiat Mobi"));
+        rfVeiculos.comprarVeiculo(elcio, "Rodrigo", "Fiat Mobi");
+        rfVeiculos.venderVeiculo(raphael, "Mateus", "Honda PCX");
+        System.out.println(rfVeiculos.imprimirNotaFiscal(elcio, "Fiat Mobi")) ;
+
+
         //TODO
         // Encontrar veiculo por modelo,
         // encontrar veiculo por cor,

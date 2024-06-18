@@ -58,18 +58,18 @@ public class Comercial {
             }
         };
         String notaFiscal =
-                "  -----------------------------------------------------------------------------------------------" + "\n"
-                        + "                                       NOTA FISCAL" + "\n"+
-                "                      Nome: " + cliente.getNome()+ "               Cpf: " + cliente.getCpf() +"\n"+
-                "                      Tipo de veiculo: " + operacaoNotaFiscal.getVeiculo().getTipoVeiculo() + "    Tipo de operação: " +
-                          operacaoNotaFiscal.getTipoOperacao() + "\n"
-                +"                      Data: " + operacaoNotaFiscal.getDataOperacao() + "          Vendedor: " + operacaoNotaFiscal.getVendedor() +"\n"
-                +"                      Marca: "+ operacaoNotaFiscal.getVeiculo().getMarca()+ "               Modelo: " + operacaoNotaFiscal.getVeiculo().getModelo() +
-                          "\n"
-                +"                      Ano: "+  operacaoNotaFiscal.getVeiculo().getAnoDeLancamento() +"                 Cor: " + operacaoNotaFiscal.getVeiculo().getCor() +
-                          "\n" + "\n"
-                          + "         Empresa: " + nome + " "+this.cpf + "  Data de impressão: " + LocalDate.now()+"\n"+ "\n"+
-                "  -----------------------------------------------------------------------------------------------";
+                "  --------------------------------------------------------------------------------------------------------------" + "\n"
+              + "                                                 NOTA FISCAL" + "\n"+
+                "                                Nome: " + cliente.getNome()+ "               Cpf: " + cliente.getCpf() +"\n"+
+                "                                Tipo de veiculo: " + operacaoNotaFiscal.getVeiculo().getTipoVeiculo() + "    Tipo de operação: " +
+                        operacaoNotaFiscal.getTipoOperacao() + "\n"
+                +"                                Data: " + operacaoNotaFiscal.getDataOperacao() + "          Vendedor: " + operacaoNotaFiscal.getVendedor() +"\n"
+                +"                                Marca: "+ operacaoNotaFiscal.getVeiculo().getMarca()+ "               Modelo: " + operacaoNotaFiscal.getVeiculo().getModelo() +
+                        "\n"
+                +"                                Ano: "+  operacaoNotaFiscal.getVeiculo().getAnoDeLancamento() +"                 Cor: " + operacaoNotaFiscal.getVeiculo().getCor() +
+                        "\n" + "\n"
+                          + "   Empresa: " + nome +" "+this.cpf + "   "+ "Comprador: " + operacaoNotaFiscal.getComprador()+ "   " + "  Data de impressão: " + LocalDate.now()+"\n"+ "\n"+
+                "  --------------------------------------------------------------------------------------------------------------";
         if (operacaoNotaFiscal == null){
             System.out.println("Venda ou Compra nao encontrada");
             return null;
