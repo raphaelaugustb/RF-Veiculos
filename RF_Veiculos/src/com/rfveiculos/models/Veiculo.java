@@ -1,4 +1,4 @@
-package com.rfveiculos.Veiculo;
+package com.rfveiculos.models;
 
 public class Veiculo {
     private String modelo;

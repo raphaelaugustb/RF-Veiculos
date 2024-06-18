@@ -1,6 +1,6 @@
 package com.rfveiculos.OperacaoComercial;
 
-import com.rfveiculos.Veiculo.Veiculo;
+import com.rfveiculos.models.Veiculo;
 
 import java.time.LocalDate;
 
