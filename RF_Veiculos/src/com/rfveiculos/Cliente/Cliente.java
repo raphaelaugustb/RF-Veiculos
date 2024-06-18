@@ -1,6 +1,6 @@
-package com.rfveiculos.cliente;
+package com.rfveiculos.Cliente;
 
-import com.rfveiculos.veiculo.Veiculo;
+import com.rfveiculos.Veiculo.Veiculo;
 
 import java.util.*;
 

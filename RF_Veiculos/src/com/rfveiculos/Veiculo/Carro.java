@@ -1,4 +1,4 @@
-package com.rfveiculos.veiculo;
+package com.rfveiculos.Veiculo;
 
 public class Carro  extends Veiculo{
     public Carro(String modelo, double preco, String marca, String cor, int anoDeLancamento) {

@@ -1,8 +1,8 @@
-import com.rfveiculos.cliente.Cliente;
-import com.rfveiculos.concessionaria.Concessionaria;
-import com.rfveiculos.veiculo.Carro;
-import com.rfveiculos.veiculo.Moto;
-import com.rfveiculos.veiculo.Veiculo;
+import com.rfveiculos.Cliente.Cliente;
+import com.rfveiculos.Concessionaria.Concessionaria;
+import com.rfveiculos.Veiculo.Carro;
+import com.rfveiculos.Veiculo.Moto;
+import com.rfveiculos.Veiculo.Veiculo;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,15 +1,16 @@
-package com.rfveiculos.concessionaria;
+package com.rfveiculos.Concessionaria;
 
-import com.rfveiculos.cliente.Cliente;
-import com.rfveiculos.veiculo.Veiculo;
+import com.rfveiculos.Cliente.Cliente;
+import com.rfveiculos.OperacaoComercial.OperacaoComercial;
+import com.rfveiculos.Veiculo.Veiculo;
 
 import java.util.*;
 
 public class Concessionaria {
     private String nome;
     private List<Veiculo> veiculosCadastrados;
-    private List<Veiculo> veiculosVendidos;
-    private List<Veiculo> veiculosComprados;
+    private List<OperacaoComercial> veiculosVendidos;
+    private List<OperacaoComercial> veiculosComprados;
     private int saldo;
     public Concessionaria(String nome, int saldoConcessionaria){
         this.nome = nome;
@@ -22,7 +23,7 @@ public class Concessionaria {
     public void adicionarNovosVeiculos(Veiculo veiculo ){
         veiculosCadastrados.add(veiculo);
     }
-    public void ComprarVeiculo(Cliente cliente, String nomeVeiculo){
+    public void ComprarVeiculo(String vendedor, Cliente cliente, String nomeVeiculo){
         Veiculo veiculoComprado = null;
         Boolean saldoPositivo = false;
         for (Veiculo v: cliente.getVeiculosComprados()){
@@ -33,7 +34,8 @@ public class Concessionaria {
             }
         }
         if (saldoPositivo) {
-            veiculosComprados.add(veiculoComprado);
+            OperacaoComercial operacaoComercialCompra = new OperacaoComercial(cliente.getNome(),vendedor,veiculoComprado);
+            veiculosComprados.add(operacaoComercialCompra);
             veiculosCadastrados.add(veiculoComprado);
             cliente.getVeiculosVendidos().add(veiculoComprado);
             cliente.getVeiculosComprados().remove(veiculoComprado);
@@ -41,7 +43,7 @@ public class Concessionaria {
             cliente.mudarSaldoCliente(veiculoComprado.getPreco());
         }
     }
-    public void venderVeiculo(Cliente cliente, String nomeVeiculo){
+    public void venderVeiculo(String vendedor,Cliente cliente, String nomeVeiculo){
     Veiculo veiculoComprado = null;
     Boolean saldoPositivo = false;
         for (Veiculo v: veiculosCadastrados){
@@ -52,8 +54,9 @@ public class Concessionaria {
             }
         }
         if (saldoPositivo) {
+            OperacaoComercial operacaoComercialCompra = new OperacaoComercial(this.nome, cliente.getNome(), veiculoComprado);
             veiculosCadastrados.remove(veiculoComprado);
-            veiculosVendidos.add(veiculoComprado);
+            veiculosVendidos.add(operacaoComercialCompra);
             cliente.adicionarVeiculoComprado(veiculoComprado);
             cliente.mudarSaldoCliente(-veiculoComprado.getPreco());
             saldo += veiculoComprado.getPreco();
@@ -93,11 +96,11 @@ public class Concessionaria {
         return veiculosCadastrados;
     }
 
-    public List<Veiculo> filtrarVeiculosVendidos() {
+    public List<OperacaoComercial> filtrarVeiculosVendidos() {
         return veiculosVendidos;
     }
 
-    public List<Veiculo> filtrarVeiculosComprados() {
+    public List<OperacaoComercial> filtrarVeiculosComprados() {
         return veiculosComprados;
     }
 }

@@ -1,4 +1,4 @@
-package com.rfveiculos.veiculo;
+package com.rfveiculos.Veiculo;
 
 public class Moto extends Veiculo{
     String tipoVeiculo;
