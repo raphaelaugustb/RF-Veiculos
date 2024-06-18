@@ -1,5 +1,7 @@
 package com.rfveiculos.models;
 
+import java.util.Scanner;
+
 public class Veiculo {
     private String modelo;
     private double preco;
@@ -9,6 +11,7 @@ public class Veiculo {
     private String tipoVeiculo;
 
     public Veiculo(String modelo, double preco, String marca, String cor, int anoDeLancamento) {
+
         this.modelo = modelo;
         this.preco = preco;
         this.marca = marca;
@@ -16,6 +19,7 @@ public class Veiculo {
         this.anoDeLancamento = anoDeLancamento;
          this.tipoVeiculo = "Veiculo";
     }
+
 
     public String getTipoVeiculo() {
         return tipoVeiculo;

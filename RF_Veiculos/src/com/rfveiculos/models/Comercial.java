@@ -3,30 +3,37 @@ package com.rfveiculos.models;
 import com.rfveiculos.Cliente.Cliente;
 import com.rfveiculos.OperacaoComercial.OperacaoComercial;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
 
 public class Comercial {
     private String nome;
     private List<Veiculo> veiculosCadastrados;
     private List<OperacaoComercial> operacoesComercias;
+    private List<Cliente> clientesCadastrados;
+
     private String cpf;
+
     public Comercial(String nome, String cpf) {
         this.veiculosCadastrados = new ArrayList<>();
         this.operacoesComercias = new ArrayList<>();
+        this.clientesCadastrados = new ArrayList<>();
         this.nome = nome;
         this.cpf = cpf;
     }
 
-    public void adicionarNovosVeiculos(Veiculo veiculo) {
-        veiculosCadastrados.add(veiculo);
+    public void adicionarNovoVeiculo() {
+        Veiculo veiculoAdicionar = criarNovoVeiculo();
+        veiculosCadastrados.add(veiculoAdicionar);
     }
 
-    private Veiculo encontrarVeiculoCompra(String nomeVeiculo, List<Veiculo> veiculos) {
+    public void adicionarNovoCliente() {
+        Cliente clienteAdicionar = criarNovoCliente();
+        clientesCadastrados.add(clienteAdicionar);
+    }
+
+    private Veiculo encontrarVeiculo(String nomeVeiculo, List<Veiculo> veiculos) {
         Veiculo veiculoComprado = null;
         for (Veiculo v : veiculos) {
             if (v.getModelo().equalsIgnoreCase(nomeVeiculo)) {
@@ -34,22 +41,75 @@ public class Comercial {
                 break;
             }
         }
-      return veiculoComprado;
+        return veiculoComprado;
     }
 
-    public void comprarVeiculo(Comercial clienteComercial, String consultorVendas, String nomeVeiculo) {
-        Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, clienteComercial.veiculosCadastrados);
-        String comprador = this.nome+": " + consultorVendas;
-        OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
-                comprador ,
-                clienteComercial.getNome(),
-                veiculoComprado,
-                "Compra", clienteComercial.getCpf());
-        veiculosCadastrados.add(veiculoComprado);
-        clienteComercial.veiculosCadastrados.remove(veiculoComprado);
-        todaOperacoesComercias().add(operacaoComercialCompra);
-        clienteComercial.todaOperacoesComercias().add(operacaoComercialCompra);
+    private Cliente criarNovoCliente() {
+        System.out.println("Cadastre um Novo Cliente");
+        Scanner scannerCliente = new Scanner(System.in);
+        System.out.println("Nome do Cliente");
+        String nomeCliente = scannerCliente.nextLine();
+        System.out.println("Cpf do cliente");
+        String cpfCliente = scannerCliente.nextLine();
+        System.out.println("Cliente Cadastrado");
+        return new Cliente(nomeCliente, cpfCliente);
     }
+
+    protected Veiculo criarNovoVeiculo() {
+        Scanner scannerVeiculo = new Scanner(System.in);
+        System.out.println("Cadastre novo veiculo");
+        System.out.println("Marca do veiculo");
+        String marcaVeiculo = scannerVeiculo.nextLine();
+        System.out.println("Modelo do veiculo");
+        String modelVeiculo = scannerVeiculo.nextLine();
+        System.out.println("Cor do veículo");
+        String corVeiculo = scannerVeiculo.nextLine();
+        System.out.println("Preço do veiculo");
+        double precoVeiculo = scannerVeiculo.nextDouble();
+        System.out.println("Ano de lançamento");
+        int anoLancamento = scannerVeiculo.nextInt();
+        System.out.println("Veiculo Cadastrado");
+        return new Veiculo(modelVeiculo, precoVeiculo, marcaVeiculo, corVeiculo, anoLancamento);
+    }
+
+    public Cliente verificarCliente() {
+        Scanner scanner = new Scanner(System.in);
+        Cliente clienteVerificado = null;
+        if (!clientesCadastrados.isEmpty()) {
+            for (Cliente c : clientesCadastrados) {
+                System.out.println("Digite o cpf do cliente");
+                String cpfCliente = scanner.nextLine();
+                if (Objects.equals(c.getCpf(), cpfCliente)) {
+                    clienteVerificado = c;
+                }
+            }
+        } else {
+            System.out.println("Lista Vazia");
+        }
+        if (clienteVerificado == null){
+            return criarNovoCliente();
+        } else {
+            return clienteVerificado;
+        }
+
+    }
+
+    public void comprarVeiculo(String consultorVendas) {
+        Cliente cliente = verificarCliente();
+
+        Veiculo veiculoComprado = criarNovoVeiculo();
+        String comprador = this.nome + ": " + consultorVendas;
+        OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
+                comprador,
+                cliente.getNome(),
+                veiculoComprado,
+                "Compra", cliente.getCpf(), cliente.getId());
+        veiculosCadastrados.add(veiculoComprado);
+        operacoesComercias.add(operacaoComercialCompra);
+    }
+
+
+
     public String imprimirNotaFiscal(Cliente cliente, String nomeVeiculo){
         OperacaoComercial operacaoNotaFiscal = null;
         for(OperacaoComercial o : operacoesComercias){
@@ -78,19 +138,20 @@ public class Comercial {
         }
 
     }
-    public void venderVeiculo(Comercial clienteComercial, String consultorVendas, String nomeVeiculo) {
-        Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, veiculosCadastrados);
-        String vendedor = this.nome+": " + consultorVendas;
+    public void venderVeiculo(Cliente cliente, String consultorVendas, String nomeVeiculo) {
+        Veiculo veiculoComprado = encontrarVeiculo(nomeVeiculo, veiculosCadastrados);
+        if (veiculoComprado == null){
+            System.out.println("Veiculo não encontrado cadastre esse carro");
+        } else {
+            String vendedor = this.nome + ": " + consultorVendas;
             OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
-                    clienteComercial.getNome(),
+                    cliente.getNome(),
                     vendedor,
                     veiculoComprado,
-                    "Venda", clienteComercial.getCpf());
+                    "Venda", cliente.getCpf(), cliente.getId());
             veiculosCadastrados.remove(veiculoComprado);
-            clienteComercial.veiculosCadastrados.add(veiculoComprado);
-           todaOperacoesComercias().add(operacaoComercialCompra);
-           clienteComercial.todaOperacoesComercias().add(operacaoComercialCompra);
-
+            operacoesComercias.add(operacaoComercialCompra);
+        }
     }
 
     @Override
@@ -144,17 +205,24 @@ public class Comercial {
         return veiculoFaixaPreco;
     }
 
-    public List<OperacaoComercial> filtrarPorCliente(Comercial comercial, String tipoOperacao) {
-        switch (tipoOperacao) {
-            case "Compra": {
-                return comercial.filtrarVeiculosComprados();
+    public List<OperacaoComercial> filtrarPorCliente() {
+       Cliente cliente = verificarCliente();
+       Scanner tipoOperacao = new Scanner(System.in);
+        System.out.println("Digite o tipo de operação:\n.Compra \n.Venda \n.Todos");
+        switch (tipoOperacao.nextLine()) {
+            case "Compra" -> {
+                return operacoesComercias.stream().filter(o ->
+                 o.getTipoOperacao() == "Compra" && o.getidCliente() == cliente.getId()
+                ).toList();
             }
-            case "Venda": {
-                return comercial.filtrarVeiculosVendidos();
-            } case "Todos":{
-                return comercial.todaOperacoesComercias();
+            case "Venda" -> {
+                return operacoesComercias.stream().filter(o ->
+                   o.getTipoOperacao() == "Venda" && o.getidCliente() == cliente.getId()
+                ).toList();
+            } case "Todos" -> {
+                return operacoesComercias.stream().filter(o -> o.getidCliente() == cliente.getId()).toList();
             }
-            default: {
+            default -> {
                 return null;
             }
         }

@@ -6,21 +6,23 @@ import java.time.LocalDate;
 
 
 public class OperacaoComercial {
-    String comprador;
-    String vendedor;
-    Veiculo veiculo;
-    LocalDate dataOperacao;
-    String tipoOperacao;
-    String cpfCliente;
-    public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao, String cpfCliente){
+    private String comprador;
+    private String vendedor;
+    private Veiculo veiculo;
+    private LocalDate dataOperacao;
+    private String tipoOperacao;
+    private String cpfCliente;
+    private int idCliente;
+    public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao, String cpfCliente, int idCliente){
             this.comprador = comprador;
             this.vendedor = vendedor;
             this.veiculo = veiculo;
             dataOperacao = LocalDate.now();
             this.tipoOperacao = tipoOperacao;
            this.cpfCliente = cpfCliente;
+           this.idCliente = idCliente;
     }
-
+    public int getidCliente(){return  idCliente;}
     public String getVendedor() {
         return vendedor;
     }
@@ -46,7 +48,6 @@ public class OperacaoComercial {
     }
 
 
-
     @Override
     public String toString() {
         return "OperacaoComercial{" +
@@ -56,6 +57,7 @@ public class OperacaoComercial {
                 ", dataOperacao=" + dataOperacao +
                 ", tipoOperacao='" + tipoOperacao + '\'' +
                 ", cpfCliente='" + cpfCliente + '\'' +
+                ", idCliente=" + idCliente +
                 '}';
     }
 }
