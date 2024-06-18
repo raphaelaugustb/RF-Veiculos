@@ -6,13 +6,14 @@ import com.rfveiculos.Cliente.VerificarCliente;
 import com.rfveiculos.ConsultorVendas.ConsultorVendas;
 import com.rfveiculos.ConsultorVendas.CriarConsultorDeVendas;
 import com.rfveiculos.OperacaoComercial.OperacaoComercial;
-import com.rfveiculos.Veiculo.Carro;
 import com.rfveiculos.Veiculo.CriarNovoVeiculo;
 import com.rfveiculos.Veiculo.EncontrarVeiculo;
-import com.rfveiculos.Veiculo.Moto;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Concessionaria {
     private final String nome;
@@ -22,11 +23,11 @@ public class Concessionaria {
     private final List<ConsultorVendas> listaConsultoresCadastrados;
     private final String cpf;
     // Metodos Importantes
-    private VerificarCliente verificarCliente = new VerificarCliente();
-    private CriarNovoCliente criarNovoCliente = new CriarNovoCliente();
-    private CriarNovoVeiculo criarNovoVeiculo = new CriarNovoVeiculo();
-    private EncontrarVeiculo encontrarVeiculo = new EncontrarVeiculo();
-    private CriarConsultorDeVendas criarConsultorDeVendas = new CriarConsultorDeVendas();
+    private final VerificarCliente verificarCliente = new VerificarCliente();
+    private final CriarNovoCliente criarNovoCliente = new CriarNovoCliente();
+    private final CriarNovoVeiculo criarNovoVeiculo = new CriarNovoVeiculo();
+    private final EncontrarVeiculo encontrarVeiculo = new EncontrarVeiculo();
+    private final CriarConsultorDeVendas criarConsultorDeVendas = new CriarConsultorDeVendas();
 
     public Concessionaria(String nome, String cpf) {
         this.listaConsultoresCadastrados = new ArrayList<>();
@@ -38,6 +39,7 @@ public class Concessionaria {
     }
 
 
+    @SuppressWarnings("unused")
     public void adicionarNovoVeiculo() {
         Veiculo veiculoAdicionar = criarNovoVeiculo.criarNovoVeiculo();
         listaVeiculosCadastrados.add(veiculoAdicionar);
@@ -52,6 +54,7 @@ public class Concessionaria {
            listaConsultoresCadastrados.add(consultorVendas);
            return  consultorVendas;
     }
+    @SuppressWarnings("unused")
     public void comprarVeiculo() {
         Cliente cliente = verificarCliente.verificarCliente(listaClientesCadastrados);
         Veiculo veiculoComprado = criarNovoVeiculo.criarNovoVeiculo();
@@ -67,6 +70,7 @@ public class Concessionaria {
         consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
     }
 
+    @SuppressWarnings("unused")
     public void venderVeiculo() {
         Cliente cliente = verificarCliente.verificarCliente(listaClientesCadastrados);
         Veiculo veiculoComprado = encontrarVeiculo.encontrarVeiculo(listaVeiculosCadastrados);
@@ -81,6 +85,7 @@ public class Concessionaria {
             listaOperacoesComerciais.add(operacaoComercialCompra);
             consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
     }
+    @SuppressWarnings("unused")
     public void removerVeiculo(){
         System.out.println(listaVeiculosCadastrados);
         Scanner scanner = new Scanner(System.in);
@@ -107,6 +112,7 @@ public class Concessionaria {
         }
         listaClientesCadastrados.remove(clienteRemover);
     }
+    @SuppressWarnings("unused")
     public void removerConsultor(){
         System.out.println(listaConsultoresCadastrados);
         Scanner scanner = new Scanner(System.in);
@@ -121,6 +127,7 @@ public class Concessionaria {
         listaConsultoresCadastrados.remove(consultorRemover);
 
     }
+    @SuppressWarnings("unused")
     public void removerOperacaoBancaria(){
         System.out.println(listaOperacoesComerciais);
         Scanner scanner = new Scanner(System.in);
@@ -153,19 +160,18 @@ public class Concessionaria {
     }
 
     public List<Veiculo> filtrarPorMarca(String marca){
-        return listaVeiculosCadastrados.stream().filter(v -> v.getMarca() == marca).toList();
+        return listaVeiculosCadastrados.stream().filter(v -> Objects.equals(v.getMarca(), marca)).toList();
     }
     public List<Veiculo> filtrarPorAno(int anoInicial, int anoFinal, String marca){
         List<Veiculo> veiculoPorAno = new ArrayList<>();
         listaVeiculosCadastrados.forEach(v -> {
             int anoLancamentoVeiculo = v.getAnoDeLancamento();
-            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && marca == "Todos") {
+            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && Objects.equals(marca, "Todos")) {
                 veiculoPorAno.add(v);
             }
             if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && v.getMarca().equalsIgnoreCase(marca)) {
                 veiculoPorAno.add(v);
             }
-            ;
         });
         return veiculoPorAno;
     }
@@ -225,6 +231,7 @@ public class Concessionaria {
             }
         }
     }
+    @SuppressWarnings("unused")
     public List<OperacaoComercial> filtrarVeiculosVendidos() {
         return this.listaOperacoesComerciais.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
     }
@@ -244,7 +251,7 @@ public class Concessionaria {
             if (o.getVeiculo().getModelo().equalsIgnoreCase(nomeVeiculo)&& Objects.equals(cliente.getCpf(), o.getCpfCliente())){
                 operacaoNotaFiscal = o;
             }
-        };
+        }
         String notaFiscal =
                 "  --------------------------------------------------------------------------------------------------------------" + "\n"
                         + "                                                 NOTA FISCAL" + "\n"+

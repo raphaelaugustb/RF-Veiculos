@@ -7,13 +7,13 @@ import java.util.Random;
 
 
 public class OperacaoComercial {
-    private String comprador;
-    private String vendedor;
-    private Veiculo veiculo;
-    private LocalDate dataOperacao;
-    private String tipoOperacao;
-    private String cpfCliente;
-    private int idCliente;
+    private final String comprador;
+    private final String vendedor;
+    private final Veiculo veiculo;
+    private final LocalDate dataOperacao;
+    private final String tipoOperacao;
+    private final String cpfCliente;
+    private final int idCliente;
     int id;
     public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao, String cpfCliente, int idCliente){
             this.comprador = comprador;

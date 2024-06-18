@@ -1,12 +1,5 @@
-import com.rfveiculos.Cliente.Cliente;
-import com.rfveiculos.Veiculo.Carro;
-import com.rfveiculos.Veiculo.Moto;
+
 import com.rfveiculos.models.Concessionaria;
-import com.rfveiculos.models.Veiculo;
-
-import javax.swing.*;
-import java.nio.file.FileStore;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -14,14 +7,9 @@ public class Main {
 
 
         //TODO
-        // Apagar cliente e veiculos e operacoes comerciais
         // Procurar por data
         // Encontrar veiculo por modelo,
-        // encontrar veiculo por cor,
-        // ordernar por maior e menor valor,
-        // filtrar vendas por consultor e mostrar valor arrecadado.
-        // verificar se o cliente ou lista VAZIA
-
+        // Adicionar valor arrecado a classe Consultor
 
     }
 
