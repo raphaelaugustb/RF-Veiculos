@@ -14,8 +14,6 @@ public class Main {
 
 
         //TODO
-        // Separar funcoes de verificacao
-        // Separar extends e implementar salvamento na memória
         // Apagar cliente e veiculos e operacoes comerciais
         // Procurar por data
         // Encontrar veiculo por modelo,

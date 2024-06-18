@@ -119,22 +119,23 @@ public class Concessionaria {
             consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
     }
 
-    @Override
-    public String toString() {
-        return "Concessionaria{" +
-                "nome='" + nome + '\'' +
-                ", veiculosCadastrados=" + veiculosCadastrados +
-                ", operacoesComercias=" + operacoesComercias +
-                ", clientesCadastrados=" + clientesCadastrados +
-                ", listaConsultoresdeVendas=" + listaConsultoresdeVendas +
-                ", cpf='" + cpf + '\'' +
-                ", verificarCliente=" + verificarCliente +
-                ", criarNovoCliente=" + criarNovoCliente +
-                ", criarNovoVeiculo=" + criarNovoVeiculo +
-                ", encontrarVeiculo=" + encontrarVeiculo +
-                '}';
+    public ConsultorVendas filtrarPorConsultorVendas(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o nome do consultor:");
+        String nomeConsultor = scanner.nextLine();
+        ConsultorVendas consultorVendas = null;
+        for (ConsultorVendas c : listaConsultoresdeVendas) {
+            if (c.getNome().equalsIgnoreCase(nomeConsultor)) {
+                consultorVendas = c;
+            }
+        }
+        if (consultorVendas != null){
+            return  consultorVendas;
+        } else {
+            System.out.println("Consultor nao encontrado");
+            return null;
+        }
     }
-
 
     public List<Veiculo> filtrarPorMarca(String marca){
         return veiculosCadastrados.stream().filter(v -> v.getMarca() == marca).toList();
@@ -209,7 +210,29 @@ public class Concessionaria {
             }
         }
     }
+    public List<OperacaoComercial> filtrarVeiculosVendidos() {
+        return this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
+    }
 
+    public List<OperacaoComercial> filtrarVeiculosComprados() {
+        return  this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Compra").toList();
+    }
+
+    @Override
+    public String toString() {
+        return "Concessionaria{" +
+                "nome='" + nome + '\'' +
+                ", veiculosCadastrados=" + veiculosCadastrados +
+                ", operacoesComercias=" + operacoesComercias +
+                ", clientesCadastrados=" + clientesCadastrados +
+                ", listaConsultoresdeVendas=" + listaConsultoresdeVendas +
+                ", cpf='" + cpf + '\'' +
+                ", verificarCliente=" + verificarCliente +
+                ", criarNovoCliente=" + criarNovoCliente +
+                ", criarNovoVeiculo=" + criarNovoVeiculo +
+                ", encontrarVeiculo=" + encontrarVeiculo +
+                '}';
+    }
     private List<OperacaoComercial> getOperacoesComercias() {
         return operacoesComercias;
     }
@@ -230,13 +253,6 @@ public class Concessionaria {
         return veiculosCadastrados;
     }
 
-    public List<OperacaoComercial> filtrarVeiculosVendidos() {
-         return this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
-    }
-
-    public List<OperacaoComercial> filtrarVeiculosComprados() {
-        return  this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Compra").toList();
-    }
 
     public String getCpf() {
         return cpf;
