@@ -4,6 +4,7 @@ import com.rfveiculos.Cliente.Cliente;
 import com.rfveiculos.Cliente.CriarNovoCliente;
 import com.rfveiculos.Cliente.VerificarCliente;
 import com.rfveiculos.ConsultorVendas.ConsultorVendas;
+import com.rfveiculos.ConsultorVendas.CriarConsultorDeVendas;
 import com.rfveiculos.OperacaoComercial.OperacaoComercial;
 import com.rfveiculos.Veiculo.Carro;
 import com.rfveiculos.Veiculo.CriarNovoVeiculo;
@@ -25,6 +26,7 @@ public class Concessionaria {
     private CriarNovoCliente criarNovoCliente = new CriarNovoCliente();
     private CriarNovoVeiculo criarNovoVeiculo = new CriarNovoVeiculo();
     private EncontrarVeiculo encontrarVeiculo = new EncontrarVeiculo();
+    private CriarConsultorDeVendas criarConsultorDeVendas = new CriarConsultorDeVendas();
 
     public Concessionaria(String nome, String cpf) {
         this.listaConsultoresdeVendas = new ArrayList<>();
@@ -45,16 +47,11 @@ public class Concessionaria {
         Cliente clienteAdicionar = criarNovoCliente.criarNovoCliente();
         clientesCadastrados.add(clienteAdicionar);
     }
-
-
-        private ConsultorVendas adicionarConsultorVendas(){
-            Scanner scannerVendedor = new Scanner(System.in);
-            System.out.println("Digite o nome do vendendor");
-            String nomeVendedor = scannerVendedor.nextLine();
-           ConsultorVendas consultorVendas = new  ConsultorVendas(nomeVendedor);
+    public ConsultorVendas adicionarConsultorVendas(){
+            ConsultorVendas consultorVendas = criarConsultorDeVendas.criarConsultorVendas();
            listaConsultoresdeVendas.add(consultorVendas);
            return  consultorVendas;
-        }
+    }
     public void comprarVeiculo() {
         Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
         Veiculo veiculoComprado = criarNovoVeiculo.criarNovoVeiculo();
@@ -70,40 +67,6 @@ public class Concessionaria {
         consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
     }
 
-
-
-    public String imprimirNotaFiscal(){
-        Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
-        OperacaoComercial operacaoNotaFiscal = null;
-        Scanner getVeiculo = new Scanner(System.in);
-        System.out.println("Digite o nome do veículo");
-        String nomeVeiculo = getVeiculo.nextLine();
-        for(OperacaoComercial o : operacoesComercias){
-            if (o.getVeiculo().getModelo().equalsIgnoreCase(nomeVeiculo)&& Objects.equals(cliente.getCpf(), o.getCpfCliente())){
-                operacaoNotaFiscal = o;
-            }
-        };
-        String notaFiscal =
-                "  --------------------------------------------------------------------------------------------------------------" + "\n"
-              + "                                                 NOTA FISCAL" + "\n"+
-                "                                Nome: " + cliente.getNome()+ "               Cpf: " + cliente.getCpf() +"\n"+
-                "                                Tipo de veiculo: " + operacaoNotaFiscal.getVeiculo().getTipoVeiculo() + "    Tipo de operação: " +
-                        operacaoNotaFiscal.getTipoOperacao() + "\n"
-                +"                                Data: " + operacaoNotaFiscal.getDataOperacao() + "          Vendedor: " + operacaoNotaFiscal.getVendedor() +"\n"
-                +"                                Marca: "+ operacaoNotaFiscal.getVeiculo().getMarca()+ "               Modelo: " + operacaoNotaFiscal.getVeiculo().getModelo() +
-                        "\n"
-                +"                                Ano: "+  operacaoNotaFiscal.getVeiculo().getAnoDeLancamento() +"                 Cor: " + operacaoNotaFiscal.getVeiculo().getCor() +
-                        "\n" + "\n"
-                          + "   Empresa: " + nome +" "+this.cpf + "   "+ "Comprador: " + operacaoNotaFiscal.getComprador()+ "   " + "  Data de impressão: " + LocalDate.now()+"\n"+ "\n"+
-                "  --------------------------------------------------------------------------------------------------------------";
-        if (operacaoNotaFiscal == null){
-            System.out.println("Venda ou Compra nao encontrada");
-            return null;
-        } else {
-            return notaFiscal;
-        }
-
-    }
     public void venderVeiculo() {
         Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
         Veiculo veiculoComprado = encontrarVeiculo.encontrarVeiculo(veiculosCadastrados);
@@ -256,5 +219,37 @@ public class Concessionaria {
 
     public String getCpf() {
         return cpf;
+    }
+    public String imprimirNotaFiscal(){
+        Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
+        OperacaoComercial operacaoNotaFiscal = null;
+        Scanner getVeiculo = new Scanner(System.in);
+        System.out.println("Digite o nome do veículo");
+        String nomeVeiculo = getVeiculo.nextLine();
+        for(OperacaoComercial o : operacoesComercias){
+            if (o.getVeiculo().getModelo().equalsIgnoreCase(nomeVeiculo)&& Objects.equals(cliente.getCpf(), o.getCpfCliente())){
+                operacaoNotaFiscal = o;
+            }
+        };
+        String notaFiscal =
+                "  --------------------------------------------------------------------------------------------------------------" + "\n"
+                        + "                                                 NOTA FISCAL" + "\n"+
+                        "                                Nome: " + cliente.getNome()+ "               Cpf: " + cliente.getCpf() +"\n"+
+                        "                                Tipo de veiculo: " + operacaoNotaFiscal.getVeiculo().getTipoVeiculo() + "    Tipo de operação: " +
+                        operacaoNotaFiscal.getTipoOperacao() + "\n"
+                        +"                                Data: " + operacaoNotaFiscal.getDataOperacao() + "          Vendedor: " + operacaoNotaFiscal.getVendedor() +"\n"
+                        +"                                Marca: "+ operacaoNotaFiscal.getVeiculo().getMarca()+ "               Modelo: " + operacaoNotaFiscal.getVeiculo().getModelo() +
+                        "\n"
+                        +"                                Ano: "+  operacaoNotaFiscal.getVeiculo().getAnoDeLancamento() +"                 Cor: " + operacaoNotaFiscal.getVeiculo().getCor() +
+                        "\n" + "\n"
+                        + "   Empresa: " + nome +" "+this.cpf + "   "+ "Comprador: " + operacaoNotaFiscal.getComprador()+ "   " + "  Data de impressão: " + LocalDate.now()+"\n"+ "\n"+
+                        "  --------------------------------------------------------------------------------------------------------------";
+        if (operacaoNotaFiscal == null){
+            System.out.println("Venda ou Compra nao encontrada");
+            return null;
+        } else {
+            return notaFiscal;
+        }
+
     }
 }
