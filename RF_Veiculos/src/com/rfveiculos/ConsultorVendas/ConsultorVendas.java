@@ -10,10 +10,14 @@ public class ConsultorVendas {
     public ConsultorVendas(String nome) {
         this.nome = nome;
         this.listaVendas = new ArrayList<>();
-        id ++;
+        id = new Random().nextInt();
     }
     public void adicionarOperacaoComercial(OperacaoComercial operacaoComercial){
         listaVendas.add(operacaoComercial);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
@@ -22,5 +26,14 @@ public class ConsultorVendas {
 
     public List<OperacaoComercial> getListaVendas() {
         return listaVendas;
+    }
+
+    @Override
+    public String toString() {
+        return "ConsultorVendas{" +
+                "nome='" + nome + '\'' +
+                ", listaVendas=" + listaVendas +
+                ", id=" + id +
+                '}';
     }
 }

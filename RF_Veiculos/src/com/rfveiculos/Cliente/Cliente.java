@@ -1,6 +1,8 @@
 package com.rfveiculos.Cliente;
 
 
+import java.util.Random;
+
 public class Cliente {
     private int id = 1;
     private String cpf;
@@ -10,7 +12,7 @@ public class Cliente {
     public Cliente(String nome, String cpf){
         this.nome = nome;
         this.cpf = cpf;
-        id ++;
+        id = new Random().nextInt();
     }
 
     public int getId() {

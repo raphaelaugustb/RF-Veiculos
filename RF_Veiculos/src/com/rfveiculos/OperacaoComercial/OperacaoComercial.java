@@ -3,6 +3,7 @@ package com.rfveiculos.OperacaoComercial;
 import com.rfveiculos.models.Veiculo;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 
 public class OperacaoComercial {
@@ -13,6 +14,7 @@ public class OperacaoComercial {
     private String tipoOperacao;
     private String cpfCliente;
     private int idCliente;
+    int id;
     public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao, String cpfCliente, int idCliente){
             this.comprador = comprador;
             this.vendedor = vendedor;
@@ -21,6 +23,7 @@ public class OperacaoComercial {
             this.tipoOperacao = tipoOperacao;
            this.cpfCliente = cpfCliente;
            this.idCliente = idCliente;
+        id = new Random().nextInt();
     }
     public int getidCliente(){return  idCliente;}
     public String getVendedor() {
@@ -47,6 +50,13 @@ public class OperacaoComercial {
         return tipoOperacao;
     }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     @Override
     public String toString() {
@@ -58,6 +68,7 @@ public class OperacaoComercial {
                 ", tipoOperacao='" + tipoOperacao + '\'' +
                 ", cpfCliente='" + cpfCliente + '\'' +
                 ", idCliente=" + idCliente +
+                ", id=" + id +
                 '}';
     }
 }

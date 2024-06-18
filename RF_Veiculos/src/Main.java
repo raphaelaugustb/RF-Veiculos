@@ -28,9 +28,10 @@ public class Main {
     private static Concessionaria getRfVeiculos() {
         Concessionaria rfVeiculos = new Concessionaria("RF_Veiculos","14.929.978/0001-47");
 
-        System.out.println(rfVeiculos.filtrarPorCliente());
         rfVeiculos.adicionarNovoCliente();
-        rfVeiculos.venderVeiculo();
+        rfVeiculos.adicionarNovoCliente();
+        rfVeiculos.removerCliente();
+        System.out.println(rfVeiculos.getClientesCadastrados());
         return rfVeiculos;
     }
 }

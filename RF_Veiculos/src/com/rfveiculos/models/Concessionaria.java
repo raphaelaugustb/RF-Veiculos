@@ -16,10 +16,10 @@ import java.util.*;
 
 public class Concessionaria {
     private final String nome;
-    private final List<Veiculo> veiculosCadastrados;
-    private final List<OperacaoComercial> operacoesComercias;
-    private final List<Cliente> clientesCadastrados;
-    private final List<ConsultorVendas> listaConsultoresdeVendas;
+    private final List<Veiculo> listaVeiculosCadastrados;
+    private final List<OperacaoComercial> listaOperacoesComerciais;
+    private final List<Cliente> listaClientesCadastrados;
+    private final List<ConsultorVendas> listaConsultoresCadastrados;
     private final String cpf;
     // Metodos Importantes
     private VerificarCliente verificarCliente = new VerificarCliente();
@@ -29,10 +29,10 @@ public class Concessionaria {
     private CriarConsultorDeVendas criarConsultorDeVendas = new CriarConsultorDeVendas();
 
     public Concessionaria(String nome, String cpf) {
-        this.listaConsultoresdeVendas = new ArrayList<>();
-        this.veiculosCadastrados = new ArrayList<>();
-        this.operacoesComercias = new ArrayList<>();
-        this.clientesCadastrados = new ArrayList<>();
+        this.listaConsultoresCadastrados = new ArrayList<>();
+        this.listaVeiculosCadastrados = new ArrayList<>();
+        this.listaOperacoesComerciais = new ArrayList<>();
+        this.listaClientesCadastrados = new ArrayList<>();
         this.nome = nome;
         this.cpf = cpf;
     }
@@ -40,20 +40,20 @@ public class Concessionaria {
 
     public void adicionarNovoVeiculo() {
         Veiculo veiculoAdicionar = criarNovoVeiculo.criarNovoVeiculo();
-        veiculosCadastrados.add(veiculoAdicionar);
+        listaVeiculosCadastrados.add(veiculoAdicionar);
     }
 
     public void adicionarNovoCliente() {
         Cliente clienteAdicionar = criarNovoCliente.criarNovoCliente();
-        clientesCadastrados.add(clienteAdicionar);
+        listaClientesCadastrados.add(clienteAdicionar);
     }
     public ConsultorVendas adicionarConsultorVendas(){
             ConsultorVendas consultorVendas = criarConsultorDeVendas.criarConsultorVendas();
-           listaConsultoresdeVendas.add(consultorVendas);
+           listaConsultoresCadastrados.add(consultorVendas);
            return  consultorVendas;
     }
     public void comprarVeiculo() {
-        Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
+        Cliente cliente = verificarCliente.verificarCliente(listaClientesCadastrados);
         Veiculo veiculoComprado = criarNovoVeiculo.criarNovoVeiculo();
         ConsultorVendas consultorVendas = adicionarConsultorVendas();
         String comprador = this.nome + ": " + consultorVendas.getNome();
@@ -62,14 +62,14 @@ public class Concessionaria {
                 cliente.getNome(),
                 veiculoComprado,
                 "Compra", cliente.getCpf(), cliente.getId());
-        veiculosCadastrados.add(veiculoComprado);
-        operacoesComercias.add(operacaoComercialCompra);
+        listaVeiculosCadastrados.add(veiculoComprado);
+        listaOperacoesComerciais.add(operacaoComercialCompra);
         consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
     }
 
     public void venderVeiculo() {
-        Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
-        Veiculo veiculoComprado = encontrarVeiculo.encontrarVeiculo(veiculosCadastrados);
+        Cliente cliente = verificarCliente.verificarCliente(listaClientesCadastrados);
+        Veiculo veiculoComprado = encontrarVeiculo.encontrarVeiculo(listaVeiculosCadastrados);
         ConsultorVendas consultorVendas = adicionarConsultorVendas();
         String vendedor = this.nome + ": " + consultorVendas.getNome();
             OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
@@ -77,17 +77,69 @@ public class Concessionaria {
                     vendedor,
                     veiculoComprado,
                     "Venda", cliente.getCpf(), cliente.getId());
-            veiculosCadastrados.remove(veiculoComprado);
-            operacoesComercias.add(operacaoComercialCompra);
+            listaVeiculosCadastrados.remove(veiculoComprado);
+            listaOperacoesComerciais.add(operacaoComercialCompra);
             consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
     }
+    public void removerVeiculo(){
+        System.out.println(listaVeiculosCadastrados);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o ID do carro");
+        int idDigitado = scanner.nextInt();
+        Veiculo veiculoRemover = null;
+        for (Veiculo v : listaVeiculosCadastrados) {
+            if (v.getId() == idDigitado) {
+                veiculoRemover = v;
+            }
+        }
+        listaVeiculosCadastrados.remove(veiculoRemover);
+    }
+    public void removerCliente(){
+        System.out.println(listaClientesCadastrados);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o ID do cliente");
+        int idDigitado = scanner.nextInt();
+        Cliente clienteRemover = null;
+        for (Cliente c : listaClientesCadastrados) {
+            if (c.getId() == idDigitado) {
+                clienteRemover = c;
+            }
+        }
+        listaClientesCadastrados.remove(clienteRemover);
+    }
+    public void removerConsultor(){
+        System.out.println(listaConsultoresCadastrados);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o ID do Consultor");
+        int idDigitado = scanner.nextInt();
+        ConsultorVendas consultorRemover = null;
+        for (ConsultorVendas c : listaConsultoresCadastrados) {
+            if (c.getId() == idDigitado) {
+                consultorRemover = c;
+            }
+        }
+        listaConsultoresCadastrados.remove(consultorRemover);
 
+    }
+    public void removerOperacaoBancaria(){
+        System.out.println(listaOperacoesComerciais);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o ID da Operação");
+        int idDigitado = scanner.nextInt();
+        OperacaoComercial operacaoComercialRemover = null;
+        for (OperacaoComercial o : listaOperacoesComerciais) {
+            if (o.getId() == idDigitado) {
+                operacaoComercialRemover = o;
+            }
+        }
+        listaOperacoesComerciais.remove(operacaoComercialRemover);
+    }
     public ConsultorVendas filtrarPorConsultorVendas(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o nome do consultor:");
         String nomeConsultor = scanner.nextLine();
         ConsultorVendas consultorVendas = null;
-        for (ConsultorVendas c : listaConsultoresdeVendas) {
+        for (ConsultorVendas c : listaConsultoresCadastrados) {
             if (c.getNome().equalsIgnoreCase(nomeConsultor)) {
                 consultorVendas = c;
             }
@@ -101,11 +153,11 @@ public class Concessionaria {
     }
 
     public List<Veiculo> filtrarPorMarca(String marca){
-        return veiculosCadastrados.stream().filter(v -> v.getMarca() == marca).toList();
+        return listaVeiculosCadastrados.stream().filter(v -> v.getMarca() == marca).toList();
     }
     public List<Veiculo> filtrarPorAno(int anoInicial, int anoFinal, String marca){
         List<Veiculo> veiculoPorAno = new ArrayList<>();
-        veiculosCadastrados.forEach(v -> {
+        listaVeiculosCadastrados.forEach(v -> {
             int anoLancamentoVeiculo = v.getAnoDeLancamento();
             if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && marca == "Todos") {
                 veiculoPorAno.add(v);
@@ -127,7 +179,7 @@ public class Concessionaria {
         int valorFinal = scannerFiltro.nextInt();
         System.out.println("Tipo de veículo\n.Carro\n.Moto\nTodos");
         String tipoVeiculo = scannerFiltro.nextLine();
-        veiculosCadastrados.forEach(v -> {
+        listaVeiculosCadastrados.forEach(v -> {
             double precoVeiculo = v.getPreco();
             switch (tipoVeiculo) {
                 case "Todos":{
@@ -152,21 +204,21 @@ public class Concessionaria {
     }
 
     public List<OperacaoComercial> filtrarPorCliente() {
-        Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
+        Cliente cliente = verificarCliente.verificarCliente(listaClientesCadastrados);
        Scanner tipoOperacao = new Scanner(System.in);
         System.out.println("Digite o tipo de operação:\n.Compra \n.Venda \n.Todos");
         switch (tipoOperacao.nextLine()) {
             case "Compra" -> {
-                return operacoesComercias.stream().filter(o ->
+                return listaOperacoesComerciais.stream().filter(o ->
                  o.getTipoOperacao() == "Compra" && o.getidCliente() == cliente.getId()
                 ).toList();
             }
             case "Venda" -> {
-                return operacoesComercias.stream().filter(o ->
+                return listaOperacoesComerciais.stream().filter(o ->
                    o.getTipoOperacao() == "Venda" && o.getidCliente() == cliente.getId()
                 ).toList();
             } case "Todos" -> {
-                return operacoesComercias.stream().filter(o -> o.getidCliente() == cliente.getId()).toList();
+                return listaOperacoesComerciais.stream().filter(o -> o.getidCliente() == cliente.getId()).toList();
             }
             default -> {
                 return null;
@@ -174,59 +226,21 @@ public class Concessionaria {
         }
     }
     public List<OperacaoComercial> filtrarVeiculosVendidos() {
-        return this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
+        return this.listaOperacoesComerciais.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
     }
 
     public List<OperacaoComercial> filtrarVeiculosComprados() {
-        return  this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Compra").toList();
-    }
-
-    @Override
-    public String toString() {
-        return "Concessionaria{" +
-                "nome='" + nome + '\'' +
-                ", veiculosCadastrados=" + veiculosCadastrados +
-                ", operacoesComercias=" + operacoesComercias +
-                ", clientesCadastrados=" + clientesCadastrados +
-                ", listaConsultoresdeVendas=" + listaConsultoresdeVendas +
-                ", cpf='" + cpf + '\'' +
-                ", verificarCliente=" + verificarCliente +
-                ", criarNovoCliente=" + criarNovoCliente +
-                ", criarNovoVeiculo=" + criarNovoVeiculo +
-                ", encontrarVeiculo=" + encontrarVeiculo +
-                '}';
-    }
-    private List<OperacaoComercial> getOperacoesComercias() {
-        return operacoesComercias;
-    }
-
-    private List<Veiculo> getVeiculosCadastrados() {
-        return veiculosCadastrados;
-    }
-
-    private List<OperacaoComercial> todaOperacoesComercias() {
-        return operacoesComercias;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public List<Veiculo> filtrarVeiculosCadastrados() {
-        return veiculosCadastrados;
+        return  this.listaOperacoesComerciais.stream().filter(v -> v.getTipoOperacao() == "Compra").toList();
     }
 
 
-    public String getCpf() {
-        return cpf;
-    }
     public String imprimirNotaFiscal(){
-        Cliente cliente = verificarCliente.verificarCliente(clientesCadastrados);
+        Cliente cliente = verificarCliente.verificarCliente(listaClientesCadastrados);
         OperacaoComercial operacaoNotaFiscal = null;
         Scanner getVeiculo = new Scanner(System.in);
         System.out.println("Digite o nome do veículo");
         String nomeVeiculo = getVeiculo.nextLine();
-        for(OperacaoComercial o : operacoesComercias){
+        for(OperacaoComercial o : listaOperacoesComerciais){
             if (o.getVeiculo().getModelo().equalsIgnoreCase(nomeVeiculo)&& Objects.equals(cliente.getCpf(), o.getCpfCliente())){
                 operacaoNotaFiscal = o;
             }
@@ -250,6 +264,45 @@ public class Concessionaria {
         } else {
             return notaFiscal;
         }
+    }
+    public String getNome() {
+        return nome;
+    }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public List<OperacaoComercial> getOperacoesComercias() {
+        return listaOperacoesComerciais;
+    }
+
+    public List<Cliente> getClientesCadastrados() {
+        return listaClientesCadastrados;
+    }
+
+    public List<ConsultorVendas> getConsultoresCadastrados() {
+        return listaConsultoresCadastrados;
+    }
+
+    public List<Veiculo> getVeiculosCadastrados() {
+        return listaVeiculosCadastrados;
+    }
+
+    @Override
+    public String toString() {
+        return "Concessionaria{" +
+                "nome='" + nome + '\'' +
+                ", listaVeiculosCadastrados=" + listaVeiculosCadastrados +
+                ", listaOperacoesComerciais=" + listaOperacoesComerciais +
+                ", listaClientesCadastrados=" + listaClientesCadastrados +
+                ", listaConsultoresCadastrados=" + listaConsultoresCadastrados +
+                ", cpf='" + cpf + '\'' +
+                ", verificarCliente=" + verificarCliente +
+                ", criarNovoCliente=" + criarNovoCliente +
+                ", criarNovoVeiculo=" + criarNovoVeiculo +
+                ", encontrarVeiculo=" + encontrarVeiculo +
+                ", criarConsultorDeVendas=" + criarConsultorDeVendas +
+                '}';
     }
 }

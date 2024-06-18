@@ -1,5 +1,6 @@
 package com.rfveiculos.models;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Veiculo {
@@ -9,6 +10,7 @@ public class Veiculo {
     private String cor;
     private int anoDeLancamento;
     private String tipoVeiculo;
+    int id;
 
     public Veiculo(String modelo, double preco, String marca, String cor, int anoDeLancamento) {
 
@@ -18,6 +20,7 @@ public class Veiculo {
         this.cor = cor;
         this.anoDeLancamento = anoDeLancamento;
          this.tipoVeiculo = "Veiculo";
+        id = new Random().nextInt();
     }
 
 
@@ -49,6 +52,10 @@ public class Veiculo {
         return marca;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Veiculo{" +
@@ -58,6 +65,7 @@ public class Veiculo {
                 ", cor='" + cor + '\'' +
                 ", anoDeLancamento=" + anoDeLancamento +
                 ", tipoVeiculo='" + tipoVeiculo + '\'' +
-                '}' + "\n";
+                ", id=" + id +
+                '}';
     }
 }
