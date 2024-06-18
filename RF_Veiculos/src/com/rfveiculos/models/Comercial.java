@@ -2,18 +2,15 @@ package com.rfveiculos.models;
 
 import com.rfveiculos.Cliente.Cliente;
 import com.rfveiculos.OperacaoComercial.OperacaoComercial;
-
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.*;
 
 public class Comercial {
-    private String nome;
-    private List<Veiculo> veiculosCadastrados;
-    private List<OperacaoComercial> operacoesComercias;
-    private List<Cliente> clientesCadastrados;
-
-    private String cpf;
+    private final String nome;
+    private final List<Veiculo> veiculosCadastrados;
+    private final List<OperacaoComercial> operacoesComercias;
+    private final List<Cliente> clientesCadastrados;
+    private final String cpf;
 
     public Comercial(String nome, String cpf) {
         this.veiculosCadastrados = new ArrayList<>();
@@ -79,17 +76,17 @@ public class Comercial {
             for (Cliente c : clientesCadastrados) {
                 System.out.println("Digite o cpf do cliente");
                 String cpfCliente = scanner.nextLine();
-                if (Objects.equals(c.getCpf(), cpfCliente)) {
+                if (c.getCpf().equalsIgnoreCase(cpfCliente)) {
                     clienteVerificado = c;
                 }
             }
         } else {
             System.out.println("Lista Vazia");
         }
-        if (clienteVerificado == null){
-            return criarNovoCliente();
-        } else {
+        if (clienteVerificado != null) {
             return clienteVerificado;
+        } else {
+            return criarNovoCliente();
         }
 
     }
@@ -113,7 +110,7 @@ public class Comercial {
     public String imprimirNotaFiscal(Cliente cliente, String nomeVeiculo){
         OperacaoComercial operacaoNotaFiscal = null;
         for(OperacaoComercial o : operacoesComercias){
-            if (o.getVeiculo().getModelo() == nomeVeiculo && cliente.getCpf() == o.getCpfCliente()){
+            if (o.getVeiculo().getModelo().equalsIgnoreCase(nomeVeiculo)&& Objects.equals(cliente.getCpf(), o.getCpfCliente())){
                 operacaoNotaFiscal = o;
             }
         };
@@ -171,7 +168,7 @@ public class Comercial {
             if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && marca == "Todos") {
                 veiculoPorAno.add(v);
             }
-            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && Objects.equals(v.getMarca(), marca)) {
+            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && v.getMarca().equalsIgnoreCase(marca)) {
                 veiculoPorAno.add(v);
             }
             ;
@@ -179,8 +176,15 @@ public class Comercial {
         return veiculoPorAno;
     }
 
-    public List<Veiculo> filtrarCarrosValor(int valorInicial, int valorFinal, String tipoVeiculo) {
+    public List<Veiculo> filtrarCarrosValor() {
         List<Veiculo> veiculoFaixaPreco = new ArrayList<>();
+        Scanner scannerFiltro = new Scanner(System.in);
+        System.out.println("Ano de inicio");
+        int valorInicial = scannerFiltro.nextInt();
+        System.out.println("Ano de Final");
+        int valorFinal = scannerFiltro.nextInt();
+        System.out.println("Tipo de veículo\n.Carro\n.Moto\nTodos");
+        String tipoVeiculo = scannerFiltro.nextLine();
         veiculosCadastrados.forEach(v -> {
             double precoVeiculo = v.getPreco();
             switch (tipoVeiculo) {
@@ -190,12 +194,12 @@ public class Comercial {
                     }
                 }
                 case "Carro":{
-                    if (precoVeiculo >= valorInicial && precoVeiculo <= valorFinal && Objects.equals(v.getTipoVeiculo(), tipoVeiculo)) {
+                    if (precoVeiculo >= valorInicial && precoVeiculo <= valorFinal && v.getTipoVeiculo().equalsIgnoreCase(tipoVeiculo)) {
                         veiculoFaixaPreco.add(v);
                     }
                 }
                 case "Moto":{
-                    if (precoVeiculo >= valorInicial && precoVeiculo <= valorFinal && Objects.equals(v.getTipoVeiculo(), tipoVeiculo)) {
+                    if (precoVeiculo >= valorInicial && precoVeiculo <= valorFinal && v.getTipoVeiculo().equalsIgnoreCase(tipoVeiculo)) {
                         veiculoFaixaPreco.add(v);
                     }
                 }
