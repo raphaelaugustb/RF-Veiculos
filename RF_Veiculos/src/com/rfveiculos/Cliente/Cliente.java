@@ -1,15 +1,11 @@
 package com.rfveiculos.Cliente;
 
-import com.rfveiculos.models.Comercial;
-
 
 public class Cliente {
     private int id = 1;
     private String cpf;
     private String  nome;
-    public void CalcularId() {
-        id++;
-    }
+
 
     public Cliente(String nome, String cpf){
         this.nome = nome;
