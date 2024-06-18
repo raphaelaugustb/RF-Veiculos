@@ -1,8 +1,6 @@
 package com.rfveiculos.models;
 
-import com.rfveiculos.Cliente.Cliente;
 import com.rfveiculos.OperacaoComercial.OperacaoComercial;
-import com.rfveiculos.expections.VeiculoNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +9,11 @@ import java.util.Objects;
 public class Comercial {
     private String nome;
     private List<Veiculo> veiculosCadastrados;
-    private List<OperacaoComercial> veiculosVendidos;
-    private List<OperacaoComercial> veiculosComprados;
-    private List<OperacaoComercial> todaOperacoesComercias;
+    private List<OperacaoComercial> operacoesComercias;
 
     public Comercial(String nome) {
-        this.veiculosComprados = new ArrayList<>();
-        this.veiculosVendidos = new ArrayList<>();
         this.veiculosCadastrados = new ArrayList<>();
-        this.todaOperacoesComercias = new ArrayList<>();
+        this.operacoesComercias = new ArrayList<>();
         this.nome = nome;
     }
 
@@ -41,21 +35,29 @@ public class Comercial {
     public void comprarVeiculo(Comercial cliente, String consultorVendas, String nomeVeiculo) {
         Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, cliente.veiculosCadastrados);
         String comprador = this.nome+": " + consultorVendas;
-        OperacaoComercial operacaoComercialCompra = new OperacaoComercial(comprador , cliente.getNome(), veiculoComprado);
+        OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
+                comprador ,
+                cliente.getNome(),
+                veiculoComprado,
+                "Compra");
         veiculosCadastrados.add(veiculoComprado);
-        veiculosComprados.add(operacaoComercialCompra);
-        cliente.veiculosVendidos.add(operacaoComercialCompra);
         cliente.veiculosCadastrados.remove(veiculoComprado);
+        todaOperacoesComercias().add(operacaoComercialCompra);
+        cliente.todaOperacoesComercias().add(operacaoComercialCompra);
     }
 
     public void venderVeiculo(Comercial cliente, String consultorVendas, String nomeVeiculo) {
         Veiculo veiculoComprado = encontrarVeiculoCompra(nomeVeiculo, veiculosCadastrados);
         String vendedor = this.nome+": " + consultorVendas;
-            OperacaoComercial operacaoComercialCompra = new OperacaoComercial(cliente.getNome(), vendedor, veiculoComprado);
+            OperacaoComercial operacaoComercialCompra = new OperacaoComercial(
+                    cliente.getNome(),
+                    vendedor,
+                    veiculoComprado,
+                    "Venda");
             veiculosCadastrados.remove(veiculoComprado);
-            veiculosVendidos.add(operacaoComercialCompra);
             cliente.veiculosCadastrados.add(veiculoComprado);
-            cliente.veiculosComprados.add(operacaoComercialCompra);
+           todaOperacoesComercias().add(operacaoComercialCompra);
+           cliente.todaOperacoesComercias().add(operacaoComercialCompra);
 
     }
 
@@ -64,9 +66,24 @@ public class Comercial {
         return "Concessionaria{" +
                 "nome='" + nome + '\'' +
                 ", veiculosCadastrados=" + veiculosCadastrados +
-                ", veiculosVendidos=" + veiculosVendidos +
-                ", veiculosComprados=" + veiculosComprados +
                 '}';
+    }
+    public List<Veiculo> filtrarPorMarca(String marca){
+        return veiculosCadastrados.stream().filter(v -> v.getMarca() == marca).toList();
+    }
+    public List<Veiculo> filtrarPorAno(int anoInicial, int anoFinal, String marca){
+        List<Veiculo> veiculoPorAno = new ArrayList<>();
+        veiculosCadastrados.forEach(v -> {
+            int anoLancamentoVeiculo = v.getAnoDeLancamento();
+            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && marca == "Todos") {
+                veiculoPorAno.add(v);
+            }
+            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && Objects.equals(v.getMarca(), marca)) {
+                veiculoPorAno.add(v);
+            }
+            ;
+        });
+        return veiculoPorAno;
     }
 
     public List<Veiculo> filtrarCarrosValor(int valorInicial, int valorFinal, String tipoVeiculo) {
@@ -98,10 +115,10 @@ public class Comercial {
     public List<OperacaoComercial> filtrarPorCliente(Comercial comercial, String tipoOperacao) {
         switch (tipoOperacao) {
             case "Compra": {
-                return comercial.filtrarVeiculosVendidos();
+                return comercial.filtrarVeiculosComprados();
             }
             case "Venda": {
-                return comercial.filtrarVeiculosComprados();
+                return comercial.filtrarVeiculosVendidos();
             } case "Todos":{
                 return comercial.todaOperacoesComercias();
             }
@@ -111,8 +128,16 @@ public class Comercial {
         }
     }
 
+    private List<OperacaoComercial> getOperacoesComercias() {
+        return operacoesComercias;
+    }
+
+    private List<Veiculo> getVeiculosCadastrados() {
+        return veiculosCadastrados;
+    }
+
     private List<OperacaoComercial> todaOperacoesComercias() {
-        return todaOperacoesComercias;
+        return operacoesComercias;
     }
 
     public String getNome() {
@@ -124,11 +149,11 @@ public class Comercial {
     }
 
     public List<OperacaoComercial> filtrarVeiculosVendidos() {
-        return veiculosVendidos;
+         return this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
     }
 
     public List<OperacaoComercial> filtrarVeiculosComprados() {
-        return veiculosComprados;
+        return  this.operacoesComercias.stream().filter(v -> v.getTipoOperacao() == "Compra").toList();
     }
 
 

@@ -10,11 +10,13 @@ public class OperacaoComercial {
     String vendedor;
     Veiculo veiculo;
     LocalDate dataOperacao;
-    public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo){
+    String tipoOperacao;
+    public OperacaoComercial(String comprador, String vendedor, Veiculo veiculo, String tipoOperacao){
             this.comprador = comprador;
             this.vendedor = vendedor;
             this.veiculo = veiculo;
             dataOperacao = LocalDate.now();
+            this.tipoOperacao = tipoOperacao;
     }
 
     public String getVendedor() {
@@ -28,6 +30,9 @@ public class OperacaoComercial {
     public String getComprador() {
         return comprador;
     }
+    public String getTipoOperacao(){
+        return tipoOperacao;
+    }
 
     @Override
     public String toString() {
@@ -36,6 +41,7 @@ public class OperacaoComercial {
                 ", vendedor='" + vendedor + '\'' +
                 ", veiculo=" + veiculo +
                 ", dataOperacao=" + dataOperacao +
-                '}';
+                ", tipoOperacao='" + tipoOperacao + '\'' +
+                '}' + "\n";
     }
 }
