@@ -4,8 +4,10 @@ import com.rfveiculos.models.Comercial;
 
 
 public class Cliente extends Comercial {
-    public Cliente(String nome, double saldo){
+    String cpf;
+    public Cliente(String nome ,String cpf){
         super(nome);
+        this.cpf = cpf;
     }
 
 

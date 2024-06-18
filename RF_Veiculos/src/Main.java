@@ -7,8 +7,8 @@ import com.rfveiculos.models.Veiculo;
 public class Main {
     public static void main(String[] args) {
         Concessionaria rfVeiculos = new Concessionaria("RF_Veiculos");
-        Cliente raphael = new Cliente("Raphael", 3000);
-        Cliente elcio = new Cliente("Elcio", 6000);
+        Cliente raphael = new Cliente("Raphael", "299.567.293-34");
+        Cliente elcio = new Cliente("Elcio", "938-000-287-203");
         Veiculo fiat_uno = new Carro("Fiat Uno", 1000, "Fiat","Azul", 2002);
         Veiculo fiat_mobi = new Carro("Fiat Mobi", 3000, "Fiat","Amarelo", 2001);
         Veiculo honda_pcx = new Moto("Honda PCX", 1000, "Honda","Branca", 2000);
@@ -23,6 +23,13 @@ public class Main {
         rfVeiculos.venderVeiculo(elcio, "Ronaldo", "Fiat Mobi");
         // Funcao de filtrar por valor, Parametros: Valor inicial, Valor final/ TipoVeiculo:Todos,Moto,Carro
         rfVeiculos.filtrarCarrosValor(1000, 2000, "Todos");
+        //TODO
+        // Cpf nos clientes,
+        // Encontrar veiculo por modelo,
+        // encontrar veiculo por cor,
+        // ordernar por maior e menor valor,
+        // filtrar vendas por consultor e mostrar valor arrecadado.
+        // verificar se o cliente ou lista VAZIA
 
 
     }

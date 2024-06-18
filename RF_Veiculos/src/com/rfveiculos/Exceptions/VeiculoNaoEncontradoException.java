@@ -1,4 +1,4 @@
-package com.rfveiculos.expections;
+package com.rfveiculos.Exceptions;
 
 public class VeiculoNaoEncontradoException extends Exception{
     String veiculoError;
