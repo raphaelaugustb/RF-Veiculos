@@ -23,7 +23,7 @@ public class OperacaoComercial {
             this.tipoOperacao = tipoOperacao;
            this.cpfCliente = cpfCliente;
            this.idCliente = idCliente;
-        id = new Random().nextInt();
+        id = Math.abs(new Random().nextInt());
     }
     public int getidCliente(){return  idCliente;}
     public String getVendedor() {

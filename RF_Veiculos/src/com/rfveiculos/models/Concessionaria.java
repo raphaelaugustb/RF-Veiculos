@@ -84,6 +84,7 @@ public class Concessionaria {
             listaVeiculosCadastrados.remove(veiculoComprado);
             listaOperacoesComerciais.add(operacaoComercialCompra);
             consultorVendas.adicionarOperacaoComercial(operacaoComercialCompra);
+            consultorVendas.incrementarValorArrecadado(veiculoComprado.getPreco());
     }
     @SuppressWarnings("unused")
     public void removerVeiculo(){
@@ -158,18 +159,46 @@ public class Concessionaria {
             return null;
         }
     }
-
-    public List<Veiculo> filtrarPorMarca(String marca){
-        return listaVeiculosCadastrados.stream().filter(v -> Objects.equals(v.getMarca(), marca)).toList();
+    private String encontrarMarca(){
+        System.out.println("Digite a marca do veículo");
+        Scanner marcaVeiculo = new Scanner(System.in);
+        return  marcaVeiculo.nextLine();
     }
-    public List<Veiculo> filtrarPorAno(int anoInicial, int anoFinal, String marca){
+    private String encontrarModelo(){
+        System.out.println("Digite o modelo do veículo");
+        Scanner marcaVeiculo = new Scanner(System.in);
+        return  marcaVeiculo.nextLine();
+    }
+
+    public List<Veiculo> filtrarPorModelo(){
+        String modeloVeiculo = encontrarModelo();
+        return listaVeiculosCadastrados.stream().filter(v -> Objects.equals(v.getMarca(), modeloVeiculo)).toList();
+    }
+    public List<Veiculo> filtrarPorMarca(){
+        String marcaVeiculo = encontrarMarca();
+        return listaVeiculosCadastrados.stream().filter(v -> Objects.equals(v.getMarca(), marcaVeiculo)).toList();
+    }
+    private int[] encontrarAno(){
+        Scanner scannerAno = new Scanner(System.in);
+        System.out.println("Ano de inicio");
+        int anoInicial = scannerAno.nextInt();
+        System.out.println("Ano de Final");
+        int anoFinal = scannerAno.nextInt();
+        return new int[]{
+                anoInicial,
+                anoFinal
+        };
+    }
+    public List<Veiculo> filtrarPorAno(){
         List<Veiculo> veiculoPorAno = new ArrayList<>();
+        int[] anoRegulador = encontrarAno();
+        String marca = encontrarMarca();
         listaVeiculosCadastrados.forEach(v -> {
             int anoLancamentoVeiculo = v.getAnoDeLancamento();
-            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && Objects.equals(marca, "Todos")) {
+            if (anoLancamentoVeiculo >= anoRegulador[0] && anoLancamentoVeiculo <= anoRegulador[1] && Objects.equals(marca, "Todos")) {
                 veiculoPorAno.add(v);
             }
-            if (anoLancamentoVeiculo >= anoInicial && anoLancamentoVeiculo <= anoFinal && v.getMarca().equalsIgnoreCase(marca)) {
+            if (anoLancamentoVeiculo >= anoRegulador[0] && anoLancamentoVeiculo <= anoRegulador[1] && v.getMarca().equalsIgnoreCase(marca)) {
                 veiculoPorAno.add(v);
             }
         });
@@ -179,9 +208,9 @@ public class Concessionaria {
     public List<Veiculo> filtrarCarrosValor() {
         List<Veiculo> veiculoFaixaPreco = new ArrayList<>();
         Scanner scannerFiltro = new Scanner(System.in);
-        System.out.println("Ano de inicio");
+        System.out.println("Valor inicial");
         int valorInicial = scannerFiltro.nextInt();
-        System.out.println("Ano de Final");
+        System.out.println("Valor Final");
         int valorFinal = scannerFiltro.nextInt();
         System.out.println("Tipo de veículo\n.Carro\n.Moto\nTodos");
         String tipoVeiculo = scannerFiltro.nextLine();

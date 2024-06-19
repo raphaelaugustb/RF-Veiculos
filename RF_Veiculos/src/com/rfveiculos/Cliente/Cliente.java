@@ -12,7 +12,7 @@ public class Cliente {
     public Cliente(String nome, String cpf){
         this.nome = nome;
         this.cpf = cpf;
-        id = new Random().nextInt();
+        id = Math.abs(new Random().nextInt());
     }
 
     public int getId() {

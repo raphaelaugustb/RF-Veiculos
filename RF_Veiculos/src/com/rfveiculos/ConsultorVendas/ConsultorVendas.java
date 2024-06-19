@@ -4,13 +4,18 @@ import com.rfveiculos.OperacaoComercial.OperacaoComercial;
 
 public class ConsultorVendas {
     private  final String nome;
-    List<OperacaoComercial> listaVendas;
-    int id;
+    private final List<OperacaoComercial> listaVendas;
+    private final int id;
+    private double valorArrecadado;
 
     public ConsultorVendas(String nome) {
         this.nome = nome;
         this.listaVendas = new ArrayList<>();
-        id = new Random().nextInt();
+        id =    Math.abs( new Random().nextInt());
+        valorArrecadado =0;
+    }
+    public void incrementarValorArrecadado(double valorCarro){
+        valorArrecadado += valorCarro;
     }
     public void adicionarOperacaoComercial(OperacaoComercial operacaoComercial){
         listaVendas.add(operacaoComercial);

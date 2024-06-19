@@ -2,15 +2,8 @@
 import com.rfveiculos.models.Concessionaria;
 public class Main {
     public static void main(String[] args) {
-
         Concessionaria rfVeiculos = getRfVeiculos();
-
-
         //TODO
-        // Procurar por data
-        // Encontrar veiculo por modelo,
-        // Adicionar valor arrecado a classe Consultor
-
     }
 
     private static Concessionaria getRfVeiculos() {
@@ -19,6 +12,7 @@ public class Main {
         rfVeiculos.adicionarNovoCliente();
         rfVeiculos.adicionarNovoCliente();
         rfVeiculos.removerCliente();
+        System.out.println(rfVeiculos.getClientesCadastrados());
         System.out.println(rfVeiculos.getClientesCadastrados());
         return rfVeiculos;
     }
