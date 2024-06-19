@@ -87,10 +87,10 @@ public class Main {
                             rfVeiculos.getConsultoresCadastrados();
                         }
                         case 3: {
-                            rfVeiculos.filtrarVeiculosVendidos();
+                            System.out.println(rfVeiculos.filtrarVeiculosVendidos());
                         }
                         case 4: {
-                            rfVeiculos.filtrarVeiculosComprados();
+                            System.out.println(rfVeiculos.filtrarVeiculosComprados());
                         }
                         case 5: {
                             rfVeiculos.filtrarPorConsultorVendas();
