@@ -15,9 +15,10 @@ public class Main {
 
             switch (selecionarOpcao.nextInt()) {
                 case 1 -> {
+                    Scanner opcaoCliente = new Scanner(System.in);
                     System.out.println("Selecione a opção desejada\n1.Adicionar novo cliente\n2.Filtrar compras e vendas do cliente\n" +
                             "3.Clientes cadastrados\n4.Remover Cliente\n5.Fechar Aplicação");
-                    switch (selecionarOpcao.nextInt()) {
+                    switch (opcaoCliente.nextInt()) {
                         case 1 -> {
                             rfVeiculos.adicionarNovoCliente();
                         }
@@ -40,9 +41,10 @@ public class Main {
                     }
                 }
                 case 2 -> {
+                    Scanner opcaoVeiculo = new Scanner(System.in);
                     System.out.println("Selecione a opção desejada:\n1.Adicionar veículo\n2.Vender veiculo" +
                             "\n3.Comprar veiculo\n4.Remover veículo\n5.Veiculos Cadastrados\n6.Filtrar por marca\n7.Filtrar por modelo\n8.Filtrar por ano\n9.Filtrar por valorx\n10.Fechar aplicação");
-                    switch (selecionarOpcao.nextInt()) {
+                    switch (opcaoVeiculo.nextInt()) {
                         case 1 -> {
                             rfVeiculos.adicionarNovoVeiculo();
                         }
@@ -78,8 +80,9 @@ public class Main {
                     }
                 }
                 case 3 -> {
-                    System.out.println("1.Adicionar consultor\n2.Listar consultores\n3.Filtrar Vendas\n4.Filtrar Compras\n5.Filtrar consulto de vendar\n6.Imprimir nota fiscal\7. Listar todas as operações comercias\n 8.Fechar Aplicação");
-                    switch (selecionarOpcao.nextInt()) {
+                    Scanner opcaoOperacao = new Scanner(System.in);
+                    System.out.println("1.Adicionar consultor\n2.Listar consultores\n3.Filtrar Vendas\n4.Filtrar Compras\n5.Filtrar consulto de vendas\n6.Imprimir nota fiscal\n7. Listar todas as operações comercias\n 8.Fechar Aplicação");
+                    switch (opcaoOperacao.nextInt()) {
                         case 1: {
                             rfVeiculos.adicionarConsultorVendas();
                         }

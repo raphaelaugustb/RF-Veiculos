@@ -260,7 +260,6 @@ public class Concessionaria {
             }
         }
     }
-    @SuppressWarnings("unused")
     public List<OperacaoComercial> filtrarVeiculosVendidos() {
         return this.listaOperacoesComerciais.stream().filter(v -> v.getTipoOperacao() == "Venda").toList();
     }
